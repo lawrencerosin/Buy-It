@@ -86,7 +86,7 @@ store.engine("sum", function(path, options, callback){
             for(let current of selectedProducts){
                 content+=`<tr>${current.ToRow()}<td><button onclick="const item=this.parentElement.parentElement.children[0].textContent; window.location.href='/delete/'+item">Delete</button></td></tr>`;
             }
-            content+=`<tr><th>Total Price:</th><th colspan='2'>$${CalculateTotal()}</th></tr></table><br><button onclick="window.location.href='/finishedBuying'">Finish Buying</button><button onclick="window.location.href='/'">Cancel</button>`;
+            content+=`<tr><th>Total Price:</th><th colspan='2'>$${CalculateTotal()}</th></tr></table><br><div id="order-completion"><button id="finish" onclick="window.location.href='/finishedBuying'">Finish Buying</button><button id="cancel" onclick="window.location.href='/'">Cancel</button></div>`;
             return callback(null, content);
         }
         catch(ex){
