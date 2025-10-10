@@ -74,7 +74,7 @@ store.use(function(request, response, next){
 });
 store.get("/buy/:items", function(request, response){
     if(selectedProducts.length>0)
-       response.render("summary.sum", selectedProducts);
+       response.render("summary", selectedProducts);
     else
         response.send("<h1>You do not have any products you selected to buy.</h1><br> <a href='/'>Click here to return to the home page</a>");
 }); 
@@ -82,9 +82,9 @@ store.get("/buy/:items", function(request, response){
 store.engine("sum", function(path, options, callback){
     const fileContent=files.readFile(path, function(error){
         try{
-            let content=`${css.BODY}${css.TABLE}${css.ORDER_COMPLETION}<table><tr><th colspan='3'>Shopping Summary</th></tr><tr><th>Product Name</th><th>Price</th><th>Delete</th></tr>`;
+            let content=`${css.BODY}${css.TABLE}${css.ORDER_COMPLETION}${css.DELETE_BUTTON}<table><tr><th colspan='3'>Shopping Summary</th></tr><tr><th>Product Name</th><th>Price</th><th>Delete</th></tr>`;
             for(let current of selectedProducts){
-                content+=`<tr>${current.ToRow()}<td><button onclick="const item=this.parentElement.parentElement.children[0].textContent; window.location.href='/delete/'+item">Delete</button></td></tr>`;
+                content+=`<tr>${current.ToRow()}<td><button class="delete" onclick="const item=this.parentElement.parentElement.children[0].textContent; window.location.href='/delete/'+item">Delete</button></td></tr>`;
             }
             content+=`<tr><th>Total Price:</th><th colspan='2'>$${CalculateTotal()}</th></tr></table><br><div id="order-completion"><button id="finish" onclick="window.location.href='/finishedBuying'">Finish Buying</button><button id="cancel" onclick="window.location.href='/'">Cancel</button></div>`;
             return callback(null, content);
@@ -117,10 +117,10 @@ store.get("/finishedBuying", function(request, response){
     let itemList=selectedProducts[0].name;
       for(let position=1; position<selectedProducts.length; position++) 
          itemList+=","+selectedProducts[position].name;
-         response.send(`<h1>Successfully bought ${itemList}.</h1><br> <button onclick="window.location.href='/'">Continue Shopping</button>`);
+         response.send(`${css.BODY}<h1>Successfully bought ${itemList}.</h1><br> <button onclick="window.location.href='/'">Continue Shopping</button>`);
     }
     else
-        response.send("<h1>No products bought</h1><br><a href='/'>Click here to return to the home page</a>");
+        response.send(`${css.BODY}<h1>No products bought</h1><br><a href='/'>Click here to return to the home page</a>`);
      
     
 }); 
