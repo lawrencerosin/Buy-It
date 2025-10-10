@@ -82,7 +82,7 @@ store.get("/buy/:items", function(request, response){
 store.engine("sum", function(path, options, callback){
     const fileContent=files.readFile(path, function(error){
         try{
-            let content=`${css.BODY}${css.TABLE}<table><tr><th colspan='3'>Shopping Summary</th></tr><tr><th>Product Name</th><th>Price</th><th>Delete</th></tr>`;
+            let content=`${css.BODY}${css.TABLE}${css.ORDER_COMPLETION}<table><tr><th colspan='3'>Shopping Summary</th></tr><tr><th>Product Name</th><th>Price</th><th>Delete</th></tr>`;
             for(let current of selectedProducts){
                 content+=`<tr>${current.ToRow()}<td><button onclick="const item=this.parentElement.parentElement.children[0].textContent; window.location.href='/delete/'+item">Delete</button></td></tr>`;
             }
