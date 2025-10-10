@@ -1,0 +1,5 @@
+const BODY="<style>body{background-color:lime;}</style>";
+const LIST="<style>ul{list-style-type:none}</style>";
+const TABLE="<style>th, td{border:1px solid black; background-color:lightgray;}</style>";
+const DELETE_BUTTON="<style>.delete{background-color:brown; color:white;}";
+module.exports={BODY, LIST, TABLE};
