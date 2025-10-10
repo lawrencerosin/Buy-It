@@ -117,7 +117,7 @@ store.get("/finishedBuying", function(request, response){
     let itemList=selectedProducts[0].name;
       for(let position=1; position<selectedProducts.length; position++) 
          itemList+=","+selectedProducts[position].name;
-         response.send(`${css.BODY}<h1>Successfully bought ${itemList}.</h1><br> <button onclick="window.location.href='/'">Continue Shopping</button>`);
+         response.send(`${css.BODY}${css.CONTINUE_SHOPPING}<h1>Successfully bought ${itemList}.</h1><br> <button id="continue-shopping" onclick="window.location.href='/'">Continue Shopping</button>`);
     }
     else
         response.send(`${css.BODY}<h1>No products bought</h1><br><a href='/'>Click here to return to the home page</a>`);
