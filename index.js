@@ -44,7 +44,7 @@ function GetSelectedProductsInfo(request, response, next){
 
 store.get("/", async function(request, response){
    
-    response.send(`${css.BODY}${css.LIST}${product.Product.CreateProductList(product.products)}<button id="buy" >Buy</button>${BUY_CLICK}`);
+    response.send(`${css.BODY}${css.LIST}${css.BUY}${product.Product.CreateProductList(product.products)}<button id="buy" >Buy</button>${BUY_CLICK}`);
     
 }); 
 
