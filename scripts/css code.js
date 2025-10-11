@@ -6,4 +6,5 @@ const BUY="<style>#buy{background-color:lightblue; border-color:lightblue;  marg
 const DELETE_BUTTON="<style>.delete{background-color:brown; color:white;}</style>";
 const ORDER_COMPLETION="<style>#finish{background-color:lightgreen; margin-right:10px;} #cancel{background-color:orange;}</style>";
 const CONTINUE_SHOPPING="<style>#continue-shopping{background-color:gold;}</style>";
-module.exports={BODY, LIST, BUY, TABLE, HEADING, DELETE_BUTTON, ORDER_COMPLETION, CONTINUE_SHOPPING};
+const BACK="<style>.back{background-color:blue; color:yellow;}</style>";
+module.exports={BODY, LIST, BUY, TABLE, HEADING, DELETE_BUTTON, ORDER_COMPLETION, CONTINUE_SHOPPING, BACK};

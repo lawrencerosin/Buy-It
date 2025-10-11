@@ -51,7 +51,7 @@ store.get("/", async function(request, response){
 store.get("/productInfo/:name", function(request, response){
     for(let current of product.products){
         if(current.name==request.params["name"])
-            response.send(`${current.toString()}<button onclick="window.location.href='/'">Back</button>`);
+            response.send(`${css.BODY}${current.toString()}${css.BACK}<button class="back" onclick="window.location.href='/'">Back</button>`);
     }
     
 });
@@ -137,7 +137,7 @@ store.put("/finishedBuying", function(request, response){
  
 store.get("/delete/:item", function(request, response){
    
-   response.send(`${css.BODY}${css.HEADING}<h1>Removing ${request.params.item} from shopping list</h1><button onclick="window.location.href='/buy/${request.params.items}'">Go Back</button>`);
+   response.send(`${css.BODY}${css.HEADING}${css.BACK}<h1>Removing ${request.params.item} from shopping list</h1><button class="back" onclick="window.location.href='/buy/${request.params.items}'">Go Back</button>`);
   
 });
 store.delete("/delete/:item", function(request, response){
