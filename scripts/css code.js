@@ -1,7 +1,8 @@
 const BODY="<style>body{background-color:lime;}</style>";
 const LIST="<style>ul{list-style-type:none}li{background-color:white; border:1px solid black; width:150px;}li:hover{background-color:silver;}</style>";
 const TABLE="<style>th, td{border:1px solid black; background-color:lightgray;}</style>";
-const BUY="<style>#buy{background-color:lightblue; border-color:lightblue; display:block; margin-left:70px;}</style>"
+ 
+const BUY="<style>#buy{background-color:lightblue; border-color:lightblue;  margin-left:70px;}</style>";
 const DELETE_BUTTON="<style>.delete{background-color:brown; color:white;}</style>";
 const ORDER_COMPLETION="<style>#finish{background-color:lightgreen; margin-right:10px;} #cancel{background-color:orange;}</style>";
 const CONTINUE_SHOPPING="<style>#continue-shopping{background-color:gold;}</style>";

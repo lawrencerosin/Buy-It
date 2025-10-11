@@ -14,7 +14,7 @@ function Find(product){
         let productList="<ul id='products'>";
         for(let product of products){
            
-            productList+=`<li> <span>${product.name}</span> <input type="checkbox" ><button onclick="window.location.href='/ProductInfo/${product.name}'">View Info</button></li>`;   
+            productList+=`<li> <span>${product.name}</span> <input type="checkbox" ><button style="background-color:orange; color:green;" onclick="window.location.href='/ProductInfo/${product.name}'">View Info</button></li>`;   
         }
         productList+="</ul>";
         return productList;
