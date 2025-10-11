@@ -9,8 +9,11 @@ const BUY_CLICK=`<script>document.getElementById("buy").addEventListener("click"
          let selected="";
           
          for(let item of document.getElementById("products").children){
-             if(item.children[1].checked)
-                 selected+=item.children[0].textContent+",";
+             if(item.children[1].checked){
+                 if(selected.length>0)
+                    selected+=",";
+                 selected+=item.children[0].textContent;
+             }
          
         }
         if(selected.length>0)  
