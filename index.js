@@ -76,7 +76,7 @@ store.get("/buy/:items", function(request, response){
     if(selectedProducts.length>0)
        response.render("summary", selectedProducts);
     else
-        response.send("<h1>You do not have any products you selected to buy.</h1><br> <a href='/'>Click here to return to the home page</a>");
+        response.send(`${css.BODY}${css.HEADING}<h1>You do not have any products you selected to buy.</h1><br> <a href='/'>Click here to return to the home page</a>`);
 }); 
  
 store.engine("sum", function(path, options, callback){
@@ -108,7 +108,7 @@ function ProductsToString(){
  
 function NoProductsSelected(error, request, response, next){
     if(selectedProducts.length==0)
-        response.send(`<h1>Successfully bought ${itemList}.</h1><br> <button onclick="window.location.href='/'">Continue Shopping</button>`);
+        response.send(`${HEADING}<h1>Successfully bought ${itemList}.</h1><br> <button onclick="window.location.href='/'">Continue Shopping</button>`);
     next();
 }
 store.use(NoProductsSelected);
@@ -117,10 +117,10 @@ store.get("/finishedBuying", function(request, response){
     let itemList=selectedProducts[0].name;
       for(let position=1; position<selectedProducts.length; position++) 
          itemList+=","+selectedProducts[position].name;
-         response.send(`${css.BODY}${css.CONTINUE_SHOPPING}<h1>Successfully bought ${itemList}.</h1><br> <button id="continue-shopping" onclick="window.location.href='/'">Continue Shopping</button>`);
+         response.send(`${css.BODY}${css.CONTINUE_SHOPPING}${css.HEADING}<h1>Successfully bought ${itemList}.</h1><br> <button id="continue-shopping" onclick="window.location.href='/'">Continue Shopping</button>`);
     }
     else
-        response.send(`${css.BODY}<h1>No products bought</h1><br><a href='/'>Click here to return to the home page</a>`);
+        response.send(`${css.BODY}${css.HEADING}<h1>No products bought</h1><br><a href='/'>Click here to return to the home page</a>`);
      
     
 }); 
@@ -137,7 +137,7 @@ store.put("/finishedBuying", function(request, response){
  
 store.get("/delete/:item", function(request, response){
    
-   response.send(`<h1>Removing ${request.params.item} from shopping list</h1><button onclick="window.location.href='/buy/${request.params.items}'">Go Back</button>`);
+   response.send(`${css.BODY}${css.HEADING}<h1>Removing ${request.params.item} from shopping list</h1><button onclick="window.location.href='/buy/${request.params.items}'">Go Back</button>`);
   
 });
 store.delete("/delete/:item", function(request, response){
