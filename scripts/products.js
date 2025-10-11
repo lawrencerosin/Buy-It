@@ -21,7 +21,7 @@ function Find(product){
     }
    
     toString(){
-        return `Name ${this.name}\nPrice $${this.price}`;
+        return `<style>.info-piece{border:1px solid orange; background-color:lightgreen;}</style><span class="info-piece">Name: ${this.name}</span><span class="info-piece">Price: $${this.price}</span><br>`;
     }
      ToRow(){
         return `<td>${this.name}</td><td>$${this.price}</td>`;
