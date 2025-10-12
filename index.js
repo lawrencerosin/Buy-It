@@ -83,9 +83,11 @@ store.get("/buy/:items", function(request, response){
 }); 
  
 store.engine("sum", function(path, options, callback){
-    const fileContent=files.readFile(path, function(error){
+    files.readFile(path, function(error, fileContent){
         try{
-            let content=`${css.BODY}${css.TABLE}${css.ORDER_COMPLETION}${css.DELETE_BUTTON}<table><tr><th colspan='3'>Shopping Summary</th></tr><tr><th>Product Name</th><th>Price</th><th>Delete</th></tr>`;
+            
+            const COLUMN_TITLES=fileContent.toString().split(",");
+            let content=`${css.BODY}${css.TABLE}${css.ORDER_COMPLETION}${css.DELETE_BUTTON}<table><tr><th colspan='3'>Shopping Summary</th></tr><tr><th>${COLUMN_TITLES[0]}</th><th>${COLUMN_TITLES[1]}</th><th>Delete</th></tr>`;
             for(let current of selectedProducts){
                 content+=`<tr>${current.ToRow()}<td><button class="delete" onclick="const item=this.parentElement.parentElement.children[0].textContent; window.location.href='/delete/'+item">Delete</button></td></tr>`;
             }
@@ -93,7 +95,7 @@ store.engine("sum", function(path, options, callback){
             return callback(null, content);
         }
         catch(ex){
-            return "Unable to display bought items.";
+            return "Unable to display bought items because of "+error+".";
         }
     });
 });
