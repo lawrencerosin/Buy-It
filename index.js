@@ -7,17 +7,17 @@ let selectedProducts=[];
 const product=require("./scripts/products.js");
 const BUY_CLICK=`<script>document.getElementById("buy").addEventListener("click", function(){
          let selected="";
-          
+         let nameNum=1;
          for(let item of document.getElementById("products").children){
              if(item.children[1].checked){
                  if(selected.length>0)
-                    selected+=",";
-                 selected+=item.children[0].textContent;
+                    selected+="&";
+                 selected+=("name"+nameNum++)+"="+item.children[0].textContent;
              }
          
         }
         if(selected.length>0)  
-          window.location.href="/buy/"+selected;
+          window.location.href="/buy?"+selected;
 });
   </script>`
 ;
@@ -28,17 +28,13 @@ function Find(productList, desiredProduct){
 }
 function GetSelectedProductsInfo(request, response, next){
     selectedProducts=[];
-    const items=request.params.items.split(",");
-    
-    for(let item of items){    
-        for(let current of product.products){
-            
-            if(current.name==item){
-                 selectedProducts.push(current);
-                 break;
-            }
-        }
+    const items=request.query;
+    for(let item in items){
+        const location=Find(product.products, items[item]);
+        console.log(items[item]);
+        selectedProducts.push(new product.Product(items[item], product.products[location].price));
     }
+    console.log(selectedProducts);
     next();
 }
  
@@ -53,12 +49,13 @@ store.get("/", async function(request, response){
 
 store.get("/productInfo/:name", function(request, response){
     for(let current of product.products){
-        if(current.name==request.params["name"])
+        if(current.name==request.params["name"]){
             response.send(`${css.BODY}${current.toString()}${css.BACK}<button class="back" onclick="window.location.href='/'">Back</button>`);
+            break;
+        }
     }
     
 });
-store.use("/buy/:items", GetSelectedProductsInfo);
 function CalculateTotal(){
   let total=0;
   for(let current of selectedProducts)
@@ -74,8 +71,10 @@ store.use(function(request, response, next){
       else
         console.log(`${selectedProducts.length} products selected.`);
       next();
-});
-store.get("/buy/:items", function(request, response){
+}); 
+store.use(GetSelectedProductsInfo);
+store.get("/buy", function(request, response){
+     
     if(selectedProducts.length>0)
        response.render("summary", selectedProducts);
     else
@@ -87,7 +86,7 @@ store.engine("sum", function(path, options, callback){
         try{
             
             const COLUMN_TITLES=fileContent.toString().split(",");
-            let content=`${css.BODY}${css.TABLE}${css.ORDER_COMPLETION}${css.DELETE_BUTTON}<table><tr><th colspan='3'>Shopping Summary</th></tr><tr><th>${COLUMN_TITLES[0]}</th><th>${COLUMN_TITLES[1]}</th><th>Delete</th></tr>`;
+            let content=`${css.BODY}${css.TABLE}${css.ORDER_COMPLETION}${css.DELETE_BUTTON}<table><tr><th colspan='3'>Shopping Summary</th></tr><tr><th>${COLUMN_TITLES[0]}</th><th></th><th>Delete</th></tr>`;
             for(let current of selectedProducts){
                 content+=`<tr>${current.ToRow()}<td><button class="delete" onclick="const item=this.parentElement.parentElement.children[0].textContent; window.location.href='/delete/'+item">Delete</button></td></tr>`;
             }
@@ -113,7 +112,7 @@ function ProductsToString(){
  
 function NoProductsSelected(error, request, response, next){
     if(selectedProducts.length==0)
-        response.send(`${HEADING}<h1>Successfully bought ${itemList}.</h1><br> <button onclick="window.location.href='/'">Continue Shopping</button>`);
+        response.send(`${css.HEADING}<h1>Successfully bought.</h1><br> <button onclick="window.location.href='/'">Continue Shopping</button>`);
     next();
 }
 store.use(NoProductsSelected);
