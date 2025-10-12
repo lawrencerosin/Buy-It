@@ -34,7 +34,7 @@ function GetSelectedProductsInfo(request, response, next){
         console.log(items[item]);
         selectedProducts.push(new product.Product(items[item], product.products[location].price));
     }
-    console.log(selectedProducts);
+     
     next();
 }
  
@@ -82,11 +82,23 @@ store.get("/buy", function(request, response){
 }); 
  
 store.engine("sum", function(path, options, callback){
+    function GetColumns(content){
+        const columns=["", ""];
+        let position=0;
+        for(let character of content){
+              if(character==',')
+                  position++;
+              else
+                 columns[position]+=character;
+           
+        }
+        return columns;
+    }
     files.readFile(path, function(error, fileContent){
         try{
             
-            const COLUMN_TITLES=fileContent.toString().split(",");
-            let content=`${css.BODY}${css.TABLE}${css.ORDER_COMPLETION}${css.DELETE_BUTTON}<table><tr><th colspan='3'>Shopping Summary</th></tr><tr><th>${COLUMN_TITLES[0]}</th><th></th><th>Delete</th></tr>`;
+            const COLUMN_TITLES=GetColumns(fileContent.toString());
+            let content=`${css.BODY}${css.TABLE}${css.ORDER_COMPLETION}${css.DELETE_BUTTON}<table><tr><th colspan='3'>Shopping Summary</th></tr><tr><th>${COLUMN_TITLES[0]}</th><th>${COLUMN_TITLES[1]}</th><th>Delete</th></tr>`;
             for(let current of selectedProducts){
                 content+=`<tr>${current.ToRow()}<td><button class="delete" onclick="const item=this.parentElement.parentElement.children[0].textContent; window.location.href='/delete/'+item">Delete</button></td></tr>`;
             }
